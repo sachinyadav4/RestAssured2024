@@ -2,15 +2,9 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="All Test Suite"><test verbose="2" preserve-order="true" name="C:/Users/saanv/IdeaProjects/APIautomationRestAssured">
 
-    <groups>
-            <run>
-                <include name="qa">
-
-                </include>
-            </run>
-    </groups>
+    <parameter name="browser" value="chrome"/>
     <classes>
-        <class name="org.testcompany.APITesting_005_BDDStyleGet">
+        <class name="org.testcompany.testNgExample.APITesting_017_TestNg_Parameter">
             <methods><include name=".*"/>
             </methods>
         </class>

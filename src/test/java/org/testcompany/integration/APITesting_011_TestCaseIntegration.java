@@ -8,6 +8,8 @@ import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import static org.assertj.core.api.Assertions.*;
+import static io.restassured.RestAssured.given;
 
 public class APITesting_011_TestCaseIntegration {
 
@@ -26,7 +28,7 @@ public class APITesting_011_TestCaseIntegration {
                 "}";
 
 
-        requestSpecification = RestAssured.given();
+        requestSpecification = given();
         requestSpecification.baseUri("https://restful-booker.herokuapp.com");
         requestSpecification.basePath("/auth");
         requestSpecification.contentType(ContentType.JSON).log().all();
@@ -34,6 +36,7 @@ public class APITesting_011_TestCaseIntegration {
 
         //when
         response = requestSpecification.when().post();
+
         //then
         validatableResponse = response.then();
         validatableResponse.statusCode(200);
@@ -41,6 +44,10 @@ public class APITesting_011_TestCaseIntegration {
         //extract the token
         token = response.jsonPath().getString("token");
         System.out.println(token);
+
+        assertThat(token).isNotEmpty().isNotNull().isAlphanumeric().isNotBlank();
+
+
         return token;
     }
 
@@ -58,7 +65,7 @@ public class APITesting_011_TestCaseIntegration {
                 "    \"additionalneeds\" : \"Lunch\"\n" +
                 "}";
 
-        requestSpecification = RestAssured.given();
+        requestSpecification = given();
         requestSpecification.baseUri("https://restful-booker.herokuapp.com");
         requestSpecification.basePath("/booking");
         requestSpecification.contentType(ContentType.JSON);
@@ -72,6 +79,8 @@ public class APITesting_011_TestCaseIntegration {
 
         bookingId = response.jsonPath().getString("bookingid");
         System.out.println(bookingId);
+
+        assertThat(bookingId).isNotEmpty().isNotNull().isNotBlank();
 
         return bookingId;
     }
@@ -148,11 +157,26 @@ public class APITesting_011_TestCaseIntegration {
     @Test(priority = 4)
     public void test_after_delete_request_get(){
 
-        requestSpecification.baseUri("https://restful-booker.herokuapp.com");
+     /*   requestSpecification.baseUri("https://restful-booker.herokuapp.com");
         requestSpecification.basePath("/booking/"+bookingId);
         response = requestSpecification.when().log().all().get();
-        requestSpecification.then().log().all().statusCode(404);
+    //    requestSpecification.then().log().all().statusCode(404);
 
+        System.out.println("--------------------------" + response.statusCode());
+*/
+
+        Response response =
+                given()
+                        .baseUri("https://restful-booker.herokuapp.com")
+                        .basePath("/booking/" + bookingId)
+                        .when()
+                        .log().all()
+                        .get();
+
+        // Validate the response
+        response.then()
+                .log().all()
+                .statusCode(404);
     }
 
     @Description("")

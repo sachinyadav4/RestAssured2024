@@ -3,14 +3,12 @@
 <suite name="All Test Suite"><test verbose="2" preserve-order="true" name="C:/Users/saanv/IdeaProjects/APIautomationRestAssured">
 
     <groups>
-            <run>
-                <include name="qa">
-
-                </include>
-            </run>
+        <run>
+            <include name="qa"/>
+        </run>
     </groups>
     <classes>
-        <class name="org.testcompany.APITesting_005_BDDStyleGet">
+        <class name="org.testcompany.testNgExample.APITesting_014_TestNG">
             <methods><include name=".*"/>
             </methods>
         </class>
